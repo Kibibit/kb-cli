@@ -14,8 +14,8 @@ export class LicenseCommand implements CommandRunner {
   ) {}
 
   async run(
-    args: string[],
-    options: Record<string, string | boolean>
+  // args: string[],
+  // options: Record<string, string | boolean>
   ): Promise<void> {
     console.log('got here!');
   }
