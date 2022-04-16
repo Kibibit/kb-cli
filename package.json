@@ -2,9 +2,28 @@
   "name": "@kibibit/kb-cli",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "bin": {
+    "gs": "bin/kb.js"
+  },
+  "files": [
+    "/dist",
+    "/bin",
+    "/src"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "build:watch": "tsc --w",
+    "prebuild": "rimraf dist && npm run generate-barrels",
+    "postbuild": "tsc-alias -p tsconfig.json",
+    "generate-barrels": "barrelsby --delete -d ./src -l below -q --exclude spec.ts --exclude __mocks__",
+    "generate-barrels:watch": "chokidar \"src/**/*.ts\" -i \"src/**/index.ts\" -c 'npm run generate-barrels'",
+    "lint": "eslint -c ./.eslintrc.js \"**/*.{t,j}s\"",
+    "lint:fix": "eslint -c ./.eslintrc.js \"**/*.{t,j}s\" --fix",
+    "start:dev": "ts-node -r tsconfig-paths/register ./src/bootstrap.ts",
+    "start": "node -r tsconfig-paths/register ./dist/bootstrap.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -19,7 +38,7 @@
   "dependencies": {
     "@nestjs/common": "^8.4.4",
     "@nestjs/core": "^8.4.4",
-    "chalk": "^5.0.1",
+    "chalk": "^4.1.2",
     "commander": "^9.2.0",
     "fast-glob": "^3.2.11",
     "fs-extra": "^10.1.0",
@@ -50,6 +69,7 @@
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0",
     "barrelsby": "^2.3.4",
+    "chokidar": "^3.5.3",
     "commitizen": "^4.2.4",
     "cross-env": "^7.0.3",
     "cz-conventional-changelog-emoji": "^0.1.0",
@@ -57,12 +77,131 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "husky": "^7.0.4",
+    "husky": "^7.0.0",
     "jest": "^27.5.1",
     "rimraf": "^3.0.2",
     "semantic-release": "^19.0.2",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
+    "tsc-alias": "^1.6.6",
     "typescript": "^4.6.3"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "modulePathIgnorePatterns": [
+      "node_modules"
+    ],
+    "rootDir": "src",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "setupFilesAfterEnv": [
+      "../test-tools/jest.setup.ts"
+    ],
+    "collectCoverageFrom": [
+      "**/*.(t|j)s",
+      "!database/migrations/**/*.ts",
+      "!**/*.decorator.ts",
+      "!**/index.ts",
+      "!**/*.module.ts",
+      "!**/dev-tools/**/*.ts",
+      "!bootstrap-application.ts",
+      "!swagger.ts",
+      "!main.ts"
+    ],
+    "reporters": [
+      "default",
+      [
+        "jest-stare",
+        {
+          "resultDir": "./test-results",
+          "reportTitle": "jest-stare!",
+          "additionalResultsProcessors": [
+            "jest-junit"
+          ],
+          "coverageLink": "./coverage/lcov-report/index.html"
+        }
+      ]
+    ],
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover",
+      "html"
+    ],
+    "coverageDirectory": "../test-results/coverage",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@kb-models$": "<rootDir>/models/index",
+      "^@kb-abstracts$": "<rootDir>/abstracts/index",
+      "^@kb-decorators$": "<rootDir>/decorators/index",
+      "^@kb-interfaces$": "<rootDir>/interfaces/index",
+      "^@kb-errors$": "<rootDir>/errors/index",
+      "^@kb-services$": "<rootDir>/services/index"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog-emoji"
+    }
+  },
+  "release": {
+    "branches": [
+      {
+        "name": "main"
+      },
+      {
+        "name": "beta",
+        "channel": "beta",
+        "prerelease": "beta"
+      }
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "preset": "angular",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          }
+        }
+      ],
+      [
+        "@semantic-release/release-notes-generator",
+        {
+          "preset": "angular",
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES",
+              "BREAKING"
+            ]
+          },
+          "writerOpts": {
+            "commitsSort": [
+              "subject",
+              "scope"
+            ]
+          }
+        }
+      ],
+      "@semantic-release/git",
+      "@semantic-release/npm",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ]
+  },
+  "publishConfig": {
+    "access": "restricted"
   }
 }

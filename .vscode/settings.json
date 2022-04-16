@@ -1,0 +1,76 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": false,
+  "editor.rulers": [80],
+  "editor.matchBrackets": "always",
+  "terminal.integrated.fontFamily": "Hack, Menlo, Monaco, 'Courier New', monospace",
+  "debug.javascript.autoAttachFilter": "onlyWithFlag",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+  },
+  "eslint.format.enable": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs":"active",
+  "window.title": "${activeEditorShort}${separator}${rootName} [kibibit]",
+  "debug.javascript.terminalOptions": {
+    "skipFiles": [
+      "<node_internals>/**"
+    ]
+  },
+  "svg.preview.background": "black",
+  "todotodohighlight.isEnable": true,
+  "todohighlight.keywordsPattern": "TODO(@\\w+?)?:",
+  "todohighlight.defaultStyle": {
+    "color": "black",
+    "backgroundColor": "rgba(255, 221, 87, .8)",
+    "overviewRulerColor": "rgba(255, 221, 87, .8)",
+    "fontWeight": "bold",
+    "borderRadius": "2px",
+    "isWholeLine": true,
+  },
+  "peacock.color": "#2A0D5D",
+  "conventionalCommits.scopes": [
+    "vscode"
+  ],
+  "taskExplorer.enableSideBar": true,
+  "taskExplorer.enableBash": false,
+  "taskExplorer.showRunningTask": true,
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#3e138a",
+    "activityBar.activeBorder": "#a84c17",
+    "activityBar.background": "#3e138a",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#e7e7e799",
+    "activityBarBadge.background": "#a84c17",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "sash.hoverBorder": "#3e138a",
+    "statusBar.background": "#2a0d5d",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#3e138a",
+    "statusBarItem.remoteBackground": "#2a0d5d",
+    "statusBarItem.remoteForeground": "#e7e7e7",
+    "titleBar.activeBackground": "#2a0d5d",
+    "titleBar.activeForeground": "#e7e7e7",
+    "titleBar.inactiveBackground": "#2a0d5d99",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  },
+  "cSpell.words": [
+    "barrelsby",
+    "codegen",
+    "gcloud",
+    "growthspace",
+    "kibibit",
+    "luxon",
+    "nestjs",
+    "rollbar"
+  ],
+  "cSpell.ignoreWords": [
+    "approle",
+    "configit",
+    "lcov",
+    "prebuild",
+    "wfcr"
+  ],
+  "jest.autoRun": "off"
+}
