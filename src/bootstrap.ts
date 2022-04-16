@@ -18,4 +18,9 @@ export async function bootstrap() {
   await CommandFactory.run(AppModule);
 }
 
-bootstrap();
+try {
+  bootstrap();
+} catch (error) {
+  console.error(error);
+  process.exit(1);
+}
